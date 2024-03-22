@@ -7,8 +7,8 @@ const app = createApp();
 if (process.env.environment !== "production") {
   dotenv.config();
 }
-PORT = process.env.PORT ?? 3000;
-HOST = process.env.PORT ?? "localhost";
+const PORT = process.env.PORT ?? 3000;
+const HOST = process.env.HOST ?? "localhost";
 
 app.listen(PORT, HOST, () => {
   log(`Servidor escuchando en el puerto http://${HOST}:${PORT}/`);
