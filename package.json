@@ -1,0 +1,25 @@
+{
+  "name": "ballenco",
+  "version": "0.0.1",
+  "description": "A bancary web app designed to simulate the functions of a bancary app traditional",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/omar-ram-hdz/ballenco.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Express",
+    "MySQL",
+    "Bancary"
+  ],
+  "author": "Omar Ramirez Hernandez <omarramhdz16@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/omar-ram-hdz/ballenco/issues"
+  },
+  "homepage": "https://github.com/omar-ram-hdz/ballenco#readme"
+}
