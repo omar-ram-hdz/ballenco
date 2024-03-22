@@ -1,5 +1,6 @@
 {
   "name": "ballenco",
+  "type": "module",
   "version": "0.0.1",
   "description": "A bancary web app designed to simulate the functions of a bancary app traditional",
   "main": "server.js",
