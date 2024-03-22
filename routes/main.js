@@ -1,5 +1,4 @@
 import { Router } from "express";
-import fs from "fs";
 
 export const createRouter = () => {
   const mainRouter = Router();
