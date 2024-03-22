@@ -1,7 +1,8 @@
-import app from "./app.js";
+import { createApp } from "./app.js";
 import dotenv from "dotenv";
 
 const log = console.log;
+const app = createApp();
 
 if (process.env.environment !== "production") {
   dotenv.config();
