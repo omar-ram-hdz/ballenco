@@ -5,7 +5,7 @@ import path from "path";
 
 export const createApp = () => {
   const app = express();
-  const publicDirection = express.static("./public");
+  const publicDirection = express.static("./web/public");
 
   app.use(json());
   app.use(corsMiddleware());

@@ -1,14 +1,19 @@
 import { Router } from "express";
-import { readFile } from "../helpers/readFile.mjs";
+import fs from "fs";
 
 export const createRouter = () => {
   const mainRouter = Router();
 
   mainRouter.use((req, res) => {
-    let file = readFile("../views/404.html");
-    res.writeHead(404, { "Content-Type": "text/html" });
-    res.send(file);
-    res.end();
+    fs.readFile("index.html", "utf8", (err, data) => {
+      if (err) {
+        res.writeHead(500, { "Content-Type": "text/plain" });
+        res.end("Error interno del servidor");
+        return;
+      }
+      res.writeHead(200, { "Content-Type": "text/html" });
+      res.end(data);
+    });
   });
 
   return mainRouter;
