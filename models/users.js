@@ -21,14 +21,14 @@ export class UserModel {
       return data[0];
     }
   }
-  static async delete({ uuid }) {
+  static async delete({ id }) {
     try {
-      await CardsModel.deleteAllOfUser({ user: uuid });
+      await CardsModel.deleteAllOfUser({ user: id });
     } catch (err) {
       throw new Error("Error deleting cards user");
     }
     try {
-      await conn.query(`DELETE FROM users WHERE id = UUID_TO_BIN(?);`, [uuid]);
+      await conn.query(`DELETE FROM users WHERE id = UUID_TO_BIN(?);`, [id]);
     } catch (err) {
       throw new Error("Error deleting user");
     }
@@ -49,5 +49,19 @@ export class UserModel {
     }
 
     return uuid;
+  }
+  static async update({ id, input }) {
+    const { nombre, fecha_nacimiento, mail } = input;
+
+    try {
+      await conn.query(
+        `UPDATE users SET nombre = ?,fecha_nacimiento = ?,mail = ? WHERE id = UUID_TO_BIN ('${id}')`,
+        [nombre, fecha_nacimiento, mail]
+      );
+    } catch (err) {
+      throw new Error(`Error updating user: ${id}`);
+    }
+
+    return true;
   }
 }

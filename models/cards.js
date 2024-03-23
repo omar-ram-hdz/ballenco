@@ -39,4 +39,16 @@ export class CardsModel {
 
     return true;
   }
+  static async getCards({ user }) {
+    let data;
+    try {
+      [data] = await conn.query(
+        `SELECT AES_DECRYPT(numero,'${SUPER_KEY}'),vencimiento, saldo,activa FROM cards WHERE usuario = UUID_TO_BIN(?);`,
+        [user]
+      );
+    } catch (err) {
+      throw new Error(`Error getting cards from user: ${user}`);
+    }
+    return data[0];
+  }
 }

@@ -31,4 +31,17 @@ export class MotionsModel {
 
     return true;
   }
+  static async get({ origen, min }) {
+    let data;
+    try {
+      [data] = await conn.query(
+        `SELECT BIN_TO_UUID(destino) destino, fecha,monto FROM movimientos WHERE origen = UUID_TO_BIN(?) LIMIT ?,10;`,
+        [origen, min]
+      );
+    } catch (err) {
+      throw new Error("Error getting transactions");
+    }
+
+    return data[0];
+  }
 }
