@@ -2,7 +2,6 @@ import express, { json } from "express";
 import { corsMiddleware } from "./middlewares/cors.js";
 import { createRouter } from "./routes/main.js";
 import consolidate from "consolidate";
-import path from "path";
 
 export const createApp = () => {
   const app = express();

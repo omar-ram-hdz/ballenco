@@ -1,0 +1,28 @@
+import { Router } from "express";
+import { UserController } from "../controllers/users.js";
+import { CardController } from "../controllers/cards.js";
+import { MotionController } from "../controllers/motions.js";
+import { UserModel } from "../models/users.js";
+import { CardsModel } from "../models/cards.js";
+import { MotionsModel } from "../models/motions.js";
+
+export const createAPIRouter = () => {
+  const userController = UserController({ userModel: UserModel });
+  const cardController = CardController({ cardModel: CardsModel });
+  const motionController = MotionController({ motionModel: MotionsModel });
+  const router = Router();
+
+  router.get("/user", userController.getData);
+  router.post("/user", userController.create);
+  router.delete("/user", userController.delete);
+  router.patch("/user", userController.update);
+
+  router.post("/card/", cardController.create);
+  router.get("/card/:user", cardController.get);
+  router.delete("/card/:id/:user", cardController.delete);
+
+  router.post("/motions/", motionController.create);
+  router.get("/motions/:origen/:min", motionController.get);
+  router.delete("/motions/:id", motionController.delete);
+  return router;
+};
