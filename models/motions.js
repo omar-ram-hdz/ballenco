@@ -1,4 +1,4 @@
-import { createMyOwnConnection, SUPER_KEY, getUUID } from "./default";
+import { createMyOwnConnection, SUPER_KEY, getUUID } from "./default.js";
 
 const conn = createMyOwnConnection();
 
