@@ -4,11 +4,12 @@ import { CardsModel } from "./cards.js";
 const conn = createMyOwnConnection();
 
 export class UserModel {
-  static async getDataUser({ mail, password }) {
+  static async getDataUser({ input }) {
+    const { mail, pass } = input;
     let data;
     try {
       [data] = await conn.query(
-        `SELECT BIN_TO_UUID(id) id, nombre,fecha_nacimiento, mail,nip FROM users WHERE mail = ? AND pass = AES_ENCRYPT('${password}','${SUPER_KEY}');`,
+        `SELECT BIN_TO_UUID(id) id, nombre,fecha_nacimiento, mail,nip FROM users WHERE mail = ? AND pass = AES_ENCRYPT('${pass}','${SUPER_KEY}');`,
         [mail]
       );
     } catch (err) {
@@ -35,12 +36,12 @@ export class UserModel {
     return true;
   }
   static async create({ input }) {
-    const { nombre, fecha_nacimiento, mail, password } = input;
+    const { nombre, fecha_nacimiento, mail, pass } = input;
     const uuid = getUUID(conn);
 
     try {
       await conn.query(
-        `INSERT INTO users(id,nombre,fecha_nacimiento,mail,pass) VALUES(UUID_TO_BIN(${uuid}),?,?,?,AES_ENCRYPT('${password}','${SUPER_KEY}'));`,
+        `INSERT INTO users(id,nombre,fecha_nacimiento,mail,pass) VALUES(UUID_TO_BIN(${uuid}),?,?,?,AES_ENCRYPT('${pass}','${SUPER_KEY}'));`,
         [nombre, fecha_nacimiento, mail]
       );
     } catch (err) {
