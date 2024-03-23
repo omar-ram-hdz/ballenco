@@ -7,9 +7,9 @@ import { CardsModel } from "../models/cards.js";
 import { MotionsModel } from "../models/motions.js";
 
 export const createAPIRouter = () => {
-  const userController = UserController({ userModel: UserModel });
-  const cardController = CardController({ cardModel: CardsModel });
-  const motionController = MotionController({ motionModel: MotionsModel });
+  const userController = new UserController({ userModel: UserModel });
+  const cardController = new CardController({ cardModel: CardsModel });
+  const motionController = new MotionController({ motionModel: MotionsModel });
   const router = Router();
 
   router.get("/user", userController.getData);
