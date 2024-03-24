@@ -7,15 +7,15 @@ USE ballenco;
 
 -- 
 CREATE TABLE users(
-	id BINARY PRIMARY KEY,
+	id BINARY(16) PRIMARY KEY,
 	nombre VARCHAR(100) NOT NULL,
-    fecha_nacimiento DATE NOT NULL,
+    year_birthday VARCHAR(4) NOT NULL,
     mail VARCHAR(80) UNIQUE NOT NULL,
     pass BLOB NOT NULL,
     nip INT
 )CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE TABLE cards(
-	id BINARY PRIMARY KEY,
+	id BINARY(16) PRIMARY KEY,
 	numero BLOB NOT NULL,
     cvv BLOB NOT NULL,
     activa BOOL DEFAULT TRUE,
@@ -25,7 +25,7 @@ CREATE TABLE cards(
     FOREIGN KEY(usuario) REFERENCES users(id)
 );
 CREATE TABLE movimientos(
-	id BINARY PRIMARY KEY,
+	id BINARY(16) PRIMARY KEY,
 	origen BINARY NOT NULL,
     destino BINARY NOT NULL,
     fecha DATETIME NOT NULL,

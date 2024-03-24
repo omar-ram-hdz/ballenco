@@ -4,18 +4,18 @@ import { regex } from "../helpers/regex.js";
 const currentYear = new Date().getFullYear() - 19;
 
 const userSchema = z.object({
-  name: z.string({
+  nombre: z.string({
     invalid_type_error: "Name must be string",
     required_error: "Name is required",
   }),
-  fecha_nacimiento: z
-    .date({
-      invalid_type_error: "Birth date must be Date()",
+  year: z
+    .number({
+      invalid_type_error: "Birth date must be number",
       required_error: "Birth date is required",
     })
-    .min(new Date("1900-01-01"), { message: "The birth day is too old" })
-    .max(new Date(`${currentYear}-12-29`), {
-      message: "The birth day is too young",
+    .gte(1900, { message: "The birthday is too long" })
+    .lte(new Date().getFullYear() - 18, {
+      message: "The birthday is too young",
     }),
   mail: z
     .string({
@@ -45,15 +45,6 @@ const userSchema = z.object({
     })
     .regex(regex.password.special, {
       message: "The password must contains 1 special character minimum",
-    }),
-  nip: z
-    .number({
-      invalid_type_error: "The nip must be a number",
-      required_error: "Nip is required",
-    })
-    .gte(4, { message: "The nip must contains 4 digits" })
-    .lte(4, {
-      message: "The nip must be contains 4 digits",
     }),
 });
 

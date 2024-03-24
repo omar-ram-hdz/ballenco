@@ -1,16 +1,16 @@
 import { createMyOwnConnection, getUUID, SUPER_KEY } from "./default.js";
 
-const conn = createMyOwnConnection();
+const conn = await createMyOwnConnection();
 
 export class CardsModel {
   static async create({ input }) {
     const { numero, cvv, vencimiento, usuario } = input;
-    const uuid = getUUID(conn);
+    const uuid = await getUUID(conn);
 
     try {
       await conn.query(
-        `INSERT INTO cards(id,numero,cvv,vencimiento,usuario) VALUES(UUID_TO_BIN('${uuid}'), AES_ENCRYPT('${numero}','${SUPER_KEY}'), AES_ENCRYPT('${cvv}','${SUPER_KEY}'),?,UUID_TO_BIN('${usuario}')  );`,
-        [vencimiento]
+        `INSERT INTO cards(id,numero,cvv,vencimiento,usuario) VALUES(UUID_TO_BIN('${uuid}'), AES_ENCRYPT(?,'${SUPER_KEY}'), AES_ENCRYPT(?,'${SUPER_KEY}'),?,UUID_TO_BIN(?)  );`,
+        [numero, cvv, vencimiento, usuario]
       );
     } catch (err) {
       throw new Error(`Error creating card from user: ${usuario}`);

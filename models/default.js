@@ -1,4 +1,4 @@
-import mysql from "mysql2";
+import mysql from "mysql2/promise";
 import "dotenv/config";
 
 export const createMyOwnConnection = async () => {
@@ -15,7 +15,7 @@ export const createMyOwnConnection = async () => {
 };
 
 export const getUUID = async (connection) => {
-  let [uuidRes] = await connection.query("SELECT UUID() uuid;");
+  let [uuidRes] = await connection.query("SELECT UUID() AS uuid;");
   const [{ uuid }] = uuidRes;
   return uuid;
 };

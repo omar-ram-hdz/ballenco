@@ -1,18 +1,18 @@
 import { createMyOwnConnection, SUPER_KEY, getUUID } from "./default.js";
 
-const conn = createMyOwnConnection();
+const conn = await createMyOwnConnection();
 
 export class MotionsModel {
   static async create({ origin, des, monto }) {
-    const uuid = getUUID(conn);
+    const uuid = await getUUID(conn);
     let date = new Date();
     const currentTime = `${date.getFullYear()}-${
       date.getMonth() + 1
     }-${date.getDay()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
     try {
       await conn.query(
-        `INSERT INTO movimientos(id, origen,destino,fecha,monto) VALUES(UUID_TO_BIN('${uuid}'),UUID_TO_BIN('${origin}'), UUID_TO_BIN('${des}'),?  );`,
-        [monto]
+        `INSERT INTO movimientos(id, origen,destino,fecha,monto) VALUES(UUID_TO_BIN('${uuid}'),UUID_TO_BIN(?), UUID_TO_BIN(?),? ,? );`,
+        [origin, des, new Date().toISOString(), monto]
       );
     } catch (err) {
       throw new Error("Error on transaction");

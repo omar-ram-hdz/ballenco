@@ -1,7 +1,7 @@
 import { createMyOwnConnection, getUUID, SUPER_KEY } from "./default.js";
 import { CardsModel } from "./cards.js";
 
-const conn = createMyOwnConnection();
+const conn = await createMyOwnConnection();
 
 export class UserModel {
   static async getDataUser({ input }) {
@@ -9,7 +9,7 @@ export class UserModel {
     let data;
     try {
       [data] = await conn.query(
-        `SELECT BIN_TO_UUID(id) id, nombre,fecha_nacimiento, mail,nip FROM users WHERE mail = ? AND pass = AES_ENCRYPT('${pass}','${SUPER_KEY}');`,
+        `SELECT BIN_TO_UUID(id) id, nombre,year_birthday, mail,nip FROM users WHERE mail = ? AND pass = AES_ENCRYPT('${pass}','${SUPER_KEY}');`,
         [mail]
       );
     } catch (err) {
@@ -36,27 +36,27 @@ export class UserModel {
     return true;
   }
   static async create({ input }) {
-    const { nombre, fecha_nacimiento, mail, pass } = input;
-    const uuid = getUUID(conn);
-
+    const { nombre, year, mail, pass } = input;
+    const uuid = await getUUID(conn);
     try {
       await conn.query(
-        `INSERT INTO users(id,nombre,fecha_nacimiento,mail,pass) VALUES(UUID_TO_BIN(${uuid}),?,?,?,AES_ENCRYPT('${pass}','${SUPER_KEY}'));`,
-        [nombre, fecha_nacimiento, mail]
+        `INSERT INTO users(id,nombre,year_birthday,mail,pass) VALUES( UUID_TO_BIN('${uuid}'),?,?,?, AES_ENCRYPT(?,'${SUPER_KEY}') );`,
+        [nombre, year, mail, pass]
       );
     } catch (err) {
+      console.log(err);
       throw new Error("Error creating user");
     }
 
     return uuid;
   }
   static async update({ id, input }) {
-    const { nombre, fecha_nacimiento, mail } = input;
+    const { nombre, year, mail } = input;
 
     try {
       await conn.query(
-        `UPDATE users SET nombre = ?,fecha_nacimiento = ?,mail = ? WHERE id = UUID_TO_BIN ('${id}')`,
-        [nombre, fecha_nacimiento, mail]
+        `UPDATE users SET nombre = ?,year_birthday = ?,mail = ? WHERE id = UUID_TO_BIN('${id}')`,
+        [nombre, year, mail]
       );
     } catch (err) {
       throw new Error(`Error updating user: ${id}`);
