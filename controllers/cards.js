@@ -22,13 +22,24 @@ export class CardController {
 
     return res.json({ message: "Card deleted" });
   };
-  get = async (req, res) => {
+  getAll = async (req, res) => {
     const { user } = req.params;
     const result = await this.cardModel.getCards({ user });
     if (result === false) {
       return res.status(400).json({ message: "Cards not found" });
     }
 
-    return res.status(300).json(result);
+    return res.status(201).json(result);
   };
+
+  get = async (req, res) => {
+    const { id } = req.params;
+    const result = await this.cardModel.get({ id });
+    if (result === false) {
+      return res.status(400).json({ message: "Card not found" });
+    }
+    return res.status(201).json(result);
+  };
+
+  update = async (req, res) => {};
 }

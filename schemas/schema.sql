@@ -19,15 +19,16 @@ CREATE TABLE cards(
 	numero BLOB NOT NULL,
     cvv BLOB NOT NULL,
     activa BOOL DEFAULT TRUE,
-    vencimiento DATE NOT NULL,
+    year_expiration INT NOT NULL,
+    month_expiration INT NOT NULL,
     saldo DOUBLE DEFAULT 0.0,
-    usuario BINARY NOT NULL,
+    usuario BINARY(16) NOT NULL,
     FOREIGN KEY(usuario) REFERENCES users(id)
 );
 CREATE TABLE movimientos(
 	id BINARY(16) PRIMARY KEY,
-	origen BINARY NOT NULL,
-    destino BINARY NOT NULL,
+	origen BINARY(16) NOT NULL,
+    destino BINARY(16) NOT NULL,
     fecha DATETIME NOT NULL,
     monto DOUBLE NOT NULL,
     FOREIGN KEY(origen) REFERENCES cards(id), 

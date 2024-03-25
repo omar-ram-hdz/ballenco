@@ -9,13 +9,15 @@ export class UserModel {
     let data;
     try {
       [data] = await conn.query(
-        `SELECT BIN_TO_UUID(id) id, nombre,year_birthday, mail,nip FROM users WHERE mail = ? AND pass = AES_ENCRYPT('${pass}','${SUPER_KEY}');`,
-        [mail]
+        `SELECT BIN_TO_UUID(id) id, nombre,year_birthday, mail FROM users WHERE mail = ? AND pass = AES_ENCRYPT(?,'${SUPER_KEY}');`,
+        [mail, pass]
       );
     } catch (err) {
+      console.log(err);
       throw new Error("Error getting user");
     }
     if (data.length === 0) {
+      console.log(err);
       throw new Error("Error,  invalid information");
     } else {
       return data[0];
@@ -25,11 +27,13 @@ export class UserModel {
     try {
       await CardsModel.deleteAllOfUser({ user: id });
     } catch (err) {
+      console.log(err);
       throw new Error("Error deleting cards user");
     }
     try {
       await conn.query(`DELETE FROM users WHERE id = UUID_TO_BIN(?);`, [id]);
     } catch (err) {
+      console.log(err);
       throw new Error("Error deleting user");
     }
 
@@ -55,13 +59,28 @@ export class UserModel {
 
     try {
       await conn.query(
-        `UPDATE users SET nombre = ?,year_birthday = ?,mail = ? WHERE id = UUID_TO_BIN('${id}')`,
-        [nombre, year, mail]
+        `UPDATE users SET nombre = ?,year_birthday = ?,mail = ? WHERE id = UUID_TO_BIN(?);`,
+        [nombre, year, mail, id]
       );
     } catch (err) {
+      console.log(err);
       throw new Error(`Error updating user: ${id}`);
     }
 
     return true;
+  }
+  static async getDataById({ id }) {
+    let data;
+    try {
+      [data] = await conn.query(
+        `SELECT BIN_TO_UUID(id) id, nombre,year_birthday, mail FROM users WHERE id = UUID_TO_BIN(?);`,
+        [id]
+      );
+    } catch (err) {
+      console.log(err);
+      throw new Error(`Error getting user by id: ${id}`);
+    }
+
+    return data[0];
   }
 }

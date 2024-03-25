@@ -1,0 +1,74 @@
+### BASE URL
+
+http://localhost:3000/api/
+
+# USERS ENDPOINTS
+
+### Crear un nuevo usuario
+POST http://localhost:3000/api/user
+Content-Type: application/json
+{
+  "nombre":"",
+  "year": 2000,
+  "mail":"omar@gmail.com",
+  "pass":"Omar1234+"
+}
+
+### Iniciar sesion - Recuperar usuario con mail y contraseña
+GET http://localhost:3000/api/user/omagmail.com/OmegaLanda7XL9
+
+### Recuperar usuario por id
+GET http://localhost:3000/api/user/id
+### Actualizar usuario
+PATCH http://localhost:3000/api/user/id
+{
+  "nombre",
+  "year",
+  "mail",
+}
+### Eliminar usuario
+DELETE http://localhost:3000/api/user/id
+### Agregar NIP
+POST http://localhost:3000/api/user/nip
+### Cambiar NIP
+PATCH http://localhost:3000/api/user/nip
+### Conseguir NIP
+GET http://localhost:3000/api/user/nip
+
+
+# CARDS ENDPOINTS
+
+### Crear una nueva tarjeta
+POST http://localhost:3000/api/card
+{
+  "numero",
+  "cvv",
+  "year",
+  "month",
+  "user"
+}
+### Conseguir todas las tarjetas
+GET http://localhost:3000/api/card/user
+### Conseguir datos de una tarjeta
+GET http://localhost:3000/api/card/id
+### Editar tarjeta
+PATCH http://localhost:3000/api/card/id
+{
+  "saldo"
+}
+### Eliminar tarjeta
+DELETE http://localhost:3000/api/card/id
+
+
+# MOTIONS ENDPOINTS
+
+### Crear movimiento
+POST http://localhost:3000/api/motions
+{
+  "origen",
+  "destino",
+  "fecha",
+  "monto",
+}
+### Eliminar movimiento
+DELETE http://localhost:3000/api/motions/id

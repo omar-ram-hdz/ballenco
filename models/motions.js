@@ -15,6 +15,7 @@ export class MotionsModel {
         [origin, des, new Date().toISOString(), monto]
       );
     } catch (err) {
+      console.log(err);
       throw new Error("Error on transaction");
     }
 
@@ -26,6 +27,7 @@ export class MotionsModel {
         uuid,
       ]);
     } catch (err) {
+      console.log(err);
       throw new Error("ERROR on deleting transaction");
     }
 
@@ -39,6 +41,7 @@ export class MotionsModel {
         [origen, min]
       );
     } catch (err) {
+      console.log(err);
       throw new Error("Error getting transactions");
     }
 

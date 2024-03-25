@@ -33,21 +33,31 @@ export class UserController {
 
     const { id } = req.params;
 
-    const updatedUser = await this.movieModel.update({
+    const updatedUser = await this.userModel.update({
       id,
       input: result.data,
     });
 
-    return res.json(updatedMovie);
+    return res.json(updatedUser);
   };
 
   getData = async (req, res) => {
-    const result = validatePartialUser(req.body);
+    const { mail, pass } = req.params;
+    const result = validatePartialUser({ mail, pass });
     if (!result.success) {
       return res.status(400).json(result.error.message);
     }
     const data = await this.userModel.getDataUser({ input: result.data });
 
-    return res.status(300).json(data);
+    return res.status(201).json(data);
+  };
+
+  getDataById = async (req, res) => {
+    const { id } = req.params;
+    const result = await this.userModel.getDataById({ id });
+    if (result === false) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    return res.status(201).json(result);
   };
 }

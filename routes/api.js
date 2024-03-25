@@ -12,13 +12,16 @@ export const createAPIRouter = () => {
   const motionController = new MotionController({ motionModel: MotionsModel });
   const router = Router();
 
-  router.get("/user", userController.getData);
+  router.get("/user/:id", userController.getDataById);
+  router.get("/user/:mail/:pass", userController.getData);
   router.post("/user", userController.create);
-  router.delete("/user", userController.delete);
-  router.patch("/user", userController.update);
+  router.delete("/user/:id", userController.delete);
+  router.patch("/user/:id", userController.update);
 
-  router.post("/card/", cardController.create);
-  router.get("/card/:user", cardController.get);
+  router.get("/cards/:user", cardController.getAll); //
+  router.post("/card/", cardController.create); //
+  router.get("/card/:id", cardController.get); //
+  router.patch("/card/:id/", cardController.update);
   router.delete("/card/:id/:user", cardController.delete);
 
   router.post("/motions/", motionController.create);
