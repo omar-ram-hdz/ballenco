@@ -32,5 +32,4 @@ CREATE TABLE movimientos(
     fecha DATETIME NOT NULL,
     monto DOUBLE NOT NULL,
     FOREIGN KEY(origen) REFERENCES cards(id), 
-    FOREIGN KEY(destino) REFERENCES cards(id) 
 );
