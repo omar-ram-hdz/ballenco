@@ -83,4 +83,30 @@ export class UserModel {
 
     return data[0];
   }
+  static async updatePIN({ input }) {
+    const { user, nip } = input;
+    try {
+      await conn.query(`UPDATE users SET nip=? WHERE id = UUID_TO_BIN(?);`, [
+        nip,
+        user,
+      ]);
+    } catch (err) {
+      console.log(err);
+      throw new Error(`Error adding nip: ${nip} at user : ${user}`);
+    }
+    return true;
+  }
+  static async validatePIN({ pin, user }) {
+    let data;
+    try {
+      [data] = await conn.query(
+        `SELECT nip FROM users WHERE id = UUID_TO_BIN(?);`,
+        [user]
+      );
+    } catch (err) {
+      console.log(err);
+      throw new Error(`Error getting nip from user : ${user}`);
+    }
+    return data[0].nip == pin;
+  }
 }
