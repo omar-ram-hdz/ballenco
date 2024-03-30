@@ -60,4 +60,27 @@ export class UserController {
     }
     return res.status(201).json({ data: result });
   };
+  updatePIN = async (req, res) => {
+    const { id } = req.params;
+    const { nip } = req.body;
+    let str = nip.toString().length;
+    if (str > 5 || str < 2) {
+      return res.status(404).json({ message: "NIP is not 3 or 4 characters" });
+    }
+    const result = await this.userModel.updatePIN({
+      input: { user: id, pin: nip },
+    });
+    return res.status(201).json({ status: result });
+  };
+  validatePIN = async (req, res) => {
+    const { id, nip } = req.params;
+    let str = nip.toString().length;
+    if (str > 5 || str < 2) {
+      return res.status(404).json({ message: "NIP is not 3 or 4 characters" });
+    }
+    const result = await this.userModel.validatePIN({
+      input: { user: id, pin: nip },
+    });
+    return res.status(201).json({ status: result });
+  };
 }
