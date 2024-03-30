@@ -22,7 +22,7 @@ export class UserController {
       return res.status(404).json({ message: "User not found" });
     }
 
-    return res.json({ message: "User deleted" });
+    return res.json({ message: "User deleted", status: true });
   };
   update = async (req, res) => {
     const result = validatePartialUser(req.body);
@@ -38,7 +38,7 @@ export class UserController {
       input: result.data,
     });
 
-    return res.json(updatedUser);
+    return res.json({ status: updatedUser });
   };
 
   getData = async (req, res) => {
@@ -49,7 +49,7 @@ export class UserController {
     }
     const data = await this.userModel.getDataUser({ input: result.data });
 
-    return res.status(201).json(data);
+    return res.status(201).json({ data });
   };
 
   getDataById = async (req, res) => {
@@ -58,6 +58,6 @@ export class UserController {
     if (result === false) {
       return res.status(404).json({ message: "User not found" });
     }
-    return res.status(201).json(result);
+    return res.status(201).json({ data: result });
   };
 }
