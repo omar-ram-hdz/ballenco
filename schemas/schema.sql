@@ -28,7 +28,7 @@ CREATE TABLE cards(
 CREATE TABLE movimientos(
 	id BINARY(16) PRIMARY KEY,
 	origen BINARY(16) NOT NULL,
-    destino BINARY(16) NOT NULL,
+    destino BLOB NOT NULL,
     fecha DATETIME NOT NULL,
     monto DOUBLE NOT NULL,
     FOREIGN KEY(origen) REFERENCES cards(id), 
