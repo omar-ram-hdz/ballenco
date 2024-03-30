@@ -17,6 +17,8 @@ export const createAPIRouter = () => {
   router.post("/user", userController.create);
   router.delete("/user/:id", userController.delete);
   router.patch("/user/:id", userController.update);
+  router.post("/user/:id", userController.updatePIN);
+  router.get("/user/validate/:id/:nip", userController.updatePIN);
 
   router.get("/cards/:user", cardController.getAll); //
   router.post("/card/", cardController.create); //
