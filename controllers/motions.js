@@ -11,7 +11,7 @@ export class MotionController {
     }
     const newCard = await this.motionModel.create({ input: result.data });
 
-    return res.status(201).json(newCard);
+    return res.status(201).json({ motion: newCard });
   };
   delete = async (req, res) => {
     const { id } = req.params;
@@ -20,7 +20,7 @@ export class MotionController {
       return res.status(404).json({ message: "Motion not found" });
     }
 
-    return res.json({ message: "Motion deleted" });
+    return res.json({ message: "Motion deleted", status: true });
   };
   get = async (req, res) => {
     const { origen, min } = req.params;
@@ -29,6 +29,6 @@ export class MotionController {
       return res.status(400).json({ message: "Transactions not found" });
     }
 
-    return res.status(201).json(result);
+    return res.status(201).json({ data: result });
   };
 }
