@@ -1,4 +1,5 @@
 import { createMyOwnConnection, SUPER_KEY, getUUID } from "./default.js";
+import { toggleSaldo } from "./cards.js";
 
 const conn = await createMyOwnConnection();
 
@@ -9,10 +10,14 @@ export class MotionsModel {
     const currentTime = `${date.getFullYear()}-${
       date.getMonth() + 1
     }-${date.getDay()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+    const toggle = await toggleSaldo(conn, { id: origin, monto, numero: des });
+    if (!toggle) {
+      throw new Error("Error in transaction");
+    }
     try {
       await conn.query(
-        `INSERT INTO movimientos(id, origen,destino,fecha,monto) VALUES(UUID_TO_BIN('${uuid}'),UUID_TO_BIN(?), UUID_TO_BIN(?),? ,? );`,
-        [origin, des, new Date().toISOString(), monto]
+        `INSERT INTO movimientos(id, origen,destino,fecha,monto) VALUES(UUID_TO_BIN('${uuid}'),UUID_TO_BIN(?), AES_ENCRYPT(?,'${SUPER_KEY}'),? ,? );`,
+        [origin, des, currentTime, monto]
       );
     } catch (err) {
       console.log(err);
