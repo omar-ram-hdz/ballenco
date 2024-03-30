@@ -11,7 +11,7 @@ export class CardController {
     }
 
     const newCard = await this.cardModel.create({ input: result.data });
-    res.status(201).json(newCard);
+    res.status(201).json({ card: newCard });
   };
   delete = async (req, res) => {
     const { id, user } = req.params;
@@ -20,7 +20,7 @@ export class CardController {
       return res.status(400).json({ message: "Card not found" });
     }
 
-    return res.json({ message: "Card deleted" });
+    return res.json({ message: "Card deleted", status: true });
   };
   getAll = async (req, res) => {
     const { user } = req.params;
@@ -29,7 +29,7 @@ export class CardController {
       return res.status(400).json({ message: "Cards not found" });
     }
 
-    return res.status(201).json(result);
+    return res.status(201).json({ data: result });
   };
 
   get = async (req, res) => {
@@ -38,7 +38,7 @@ export class CardController {
     if (result === false) {
       return res.status(400).json({ message: "Card not found" });
     }
-    return res.status(201).json(result);
+    return res.status(201).json({ data: result });
   };
 
   update = async (req, res) => {};
