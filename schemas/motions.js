@@ -11,8 +11,7 @@ const motionsSchema = z.object({
     .string({
       invalid_type_error: "Destiny must be string",
       required_error: "Destiny is required",
-    })
-    .uuid({ message: "Invalid destiny" }),
+    }),
   monto: z.boolean({
     invalid_type_error: "Amount must be double",
     required_error: "Amount is required",
