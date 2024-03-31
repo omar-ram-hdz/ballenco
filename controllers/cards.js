@@ -41,5 +41,13 @@ export class CardController {
     return res.status(201).json({ data: result });
   };
 
-  update = async (req, res) => {};
+  disable = async (req, res) => {
+    const id = req.params;
+    const result = await this.cardModel.disable({ id });
+    if (result === false) {
+      return res.status(400).json({ message: "Cards not found" });
+    }
+
+    return res.status(201).json({ res: true });
+  };
 }

@@ -23,7 +23,7 @@ export const createAPIRouter = () => {
   router.get("/cards/:user", cardController.getAll); //
   router.post("/card/", cardController.create); //
   router.get("/card/:id", cardController.get); //
-  router.patch("/card/:id/", cardController.update);
+  router.patch("/card/active/:id", cardController.disable);
   router.delete("/card/:id/:user", cardController.delete);
 
   router.post("/motions/", motionController.create);

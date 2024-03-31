@@ -56,17 +56,16 @@ export class CardsModel {
     return data;
   }
 
-  static async update({ input }) {
-    const { id, newMoney } = input;
+  static async disable({ id }) {
     try {
       await conn.query(
-        `UPDATE cards SET saldo = ? WHERE id = UUID_TO_BIN(?);`,
-        [newMoney, id]
+        `UPDATE cards SET activa = CASE WHEN activa = TRUE THEN FALSE ELSE TRUE END;`
       );
     } catch (err) {
       console.log(err);
-      throw new Error("Error on update card money");
+      throw new Error("Error disabling card");
     }
+    return true;
   }
 
   static async get({ id }) {
